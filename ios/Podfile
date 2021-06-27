@@ -12,6 +12,8 @@ target 'payFlow2' do
     :hermes_enabled => false
   )
 
+  pod 'SRSRadialGradient', :path => '../node_modules/react-native-radial-gradient'
+
   target 'payFlow2Tests' do
     inherit! :complete
     # Pods for testing
