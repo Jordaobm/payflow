@@ -66,3 +66,7 @@ export const LoginText = styled.Text`
 
   color: #585666;
 `;
+
+export const ButtonSigInWithGoogle = styled.View`
+  margin-top: 30px;
+`;

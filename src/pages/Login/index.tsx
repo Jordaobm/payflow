@@ -3,6 +3,7 @@ import { StatusBar, Text, View } from "react-native";
 import {
   BackgroundOrange,
   BarCodeImage,
+  ButtonSigInWithGoogle,
   Container,
   ContainerImagePeople,
   ContentSmallButtonAdd,
@@ -15,6 +16,7 @@ import people from "../../../assets/images/people.png";
 import { SmallButton } from "../../components/Button";
 import RadialGradient from "react-native-radial-gradient";
 import { iconAdd, iconBarCode, iconList } from "../../icons";
+import { SigInWithGoogle } from "../../components/SigInWithGoogle";
 
 export const Login = () => {
   return (
@@ -50,6 +52,10 @@ export const Login = () => {
         <BarCodeImage source={iconBarCode} />
 
         <LoginText>Organize seus boletos em um só lugar</LoginText>
+
+        <ButtonSigInWithGoogle>
+          <SigInWithGoogle title="Entrar com Google" onPress={() => {}} />
+        </ButtonSigInWithGoogle>
       </LoginContent>
     </Container>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { ButtonProps, Text, TouchableHighlight } from "react-native";
-import { ButtonStyle, Image } from "./styled";
+import { ButtonStyle, Image } from "./styles";
 
 interface SmallButtonProps extends ButtonProps {
   icon?: any;
