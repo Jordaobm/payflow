@@ -51,7 +51,7 @@ export const BarCodeImage = styled.Image``;
 export const LoginText = styled.Text`
   margin-top: 20px;
   width: 100%;
-  max-width: 236px;
+  max-width: 250px;
 
   font-family: "Lexend-Bold";
   font-style: normal;

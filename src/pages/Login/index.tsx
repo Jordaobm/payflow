@@ -17,8 +17,14 @@ import { SmallButton } from "../../components/Button";
 import RadialGradient from "react-native-radial-gradient";
 import { iconAdd, iconBarCode, iconList } from "../../icons";
 import { SigInWithGoogle } from "../../components/SigInWithGoogle";
+import { useUser } from "../../contexts/user";
+import { useNavigation } from "@react-navigation/native";
 
 export const Login = () => {
+  const { handleSigInWithGoogle, user } = useUser();
+
+  const navigation = useNavigation();
+
   return (
     <Container>
       <StatusBar barStyle="light-content" backgroundColor="#FF941A" />
@@ -54,7 +60,16 @@ export const Login = () => {
         <LoginText>Organize seus boletos em um só lugar</LoginText>
 
         <ButtonSigInWithGoogle>
-          <SigInWithGoogle title="Entrar com Google" onPress={() => {}} />
+          <SigInWithGoogle
+            title="Entrar com Google"
+            onPress={async () => {
+              const logged = await handleSigInWithGoogle();
+
+              if (logged?.name) {
+                navigation.navigate("Home");
+              }
+            }}
+          />
         </ButtonSigInWithGoogle>
       </LoginContent>
     </Container>
