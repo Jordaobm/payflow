@@ -14,8 +14,8 @@ export function App() {
   const getUserLocalStorage = async () => {
     const localUser = await AsyncStorage.getItem("@PayFlow-user");
     if (localUser) {
-      // setInitialDataUser(JSON.parse(localUser));
-      setInitialDataUser({} as User); // desloga usuário
+      setInitialDataUser(JSON.parse(localUser));
+      // setInitialDataUser({} as User); // desloga usuário
     } else {
       setInitialDataUser({} as User);
     }

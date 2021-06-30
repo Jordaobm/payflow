@@ -17,6 +17,8 @@ export const Navigation = ({ page }: NavigationProps) => {
   const homeIcon = page === "Home" ? homeFilled : home;
   const listIcon = page === "Extract" ? listFilled : list;
 
+  const navigation = useNavigation();
+
   return (
     <Content
       colors={[
@@ -25,13 +27,13 @@ export const Navigation = ({ page }: NavigationProps) => {
         "rgba(255, 255, 255, 1)",
       ]}
     >
-      <ButtonHome>
+      <ButtonHome onPress={() => navigation.navigate("Home")}>
         <Image source={homeIcon} />
       </ButtonHome>
-      <ButtonAddSlip>
+      <ButtonAddSlip onPress={() => navigation.navigate("NewSlip")}>
         <Image source={iconAdd} />
       </ButtonAddSlip>
-      <ButtonExtract>
+      <ButtonExtract onPress={() => navigation.navigate("Extract")}>
         <Image source={listIcon} />
       </ButtonExtract>
     </Content>

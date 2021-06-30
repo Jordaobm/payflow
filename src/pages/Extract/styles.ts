@@ -42,13 +42,8 @@ export const ProfileImage = styled.Image`
   border-radius: 8px;
 `;
 
-export const ContentPaymentSlipCard = styled.View`
-  position: relative;
-  top: -6%;
-  padding: 0 24px;
-`;
-
 export const ContentMySlips = styled.View`
+  margin-top: 32px;
   padding: 0 24px;
   width: 100%;
   display: flex;
@@ -73,13 +68,12 @@ export const TotalSplips = styled.Text`
 export const FillSeparatorMySlips = styled.View`
   height: 1px;
   background-color: #e3e3e6;
-  margin: 24px 24px 32px 24px;
+  margin: 24px;
 `;
 
 export const ContentSlips = styled.View`
   width: 100%;
   padding: 0 24px;
-  padding-bottom: 24px;
 `;
 
 export const EmptyView = styled.View`

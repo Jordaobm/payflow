@@ -1,72 +1,61 @@
 import styled from "styled-components/native";
+import RadialGradient from "react-native-radial-gradient";
 
 export const Container = styled.View`
-  background-color: white;
   flex: 1;
-`;
-
-export const BackgroundOrange = styled.View`
-  width: 100%;
-  height: 35%;
-  background-color: #ff941a;
-`;
-
-export const ContainerImagePeople = styled.View`
-  position: relative;
-  top: -33%;
-
-  display: flex;
-  width: 100%;
-  justify-content: center;
+  background: white;
+  justify-content: space-between;
   align-items: center;
 `;
-
-export const ImagePeople = styled.Image``;
-
-export const ContentSmallButtonAdd = styled.View`
-  position: relative;
-  top: -55%;
-  left: 17%;
+export const Gradiente = styled(RadialGradient)`
+  align-items: center;
 `;
-
-export const ContentSmallButtonList = styled.View`
-  position: relative;
-  top: -74%;
-  left: 70%;
-`;
-
-export const LoginContent = styled.View`
-  position: relative;
-  top: -44%;
+export const People = styled.Image`
   width: 100%;
+  height: 130%;
+  position: relative;
+  top: 15%;
+`;
 
-  display: flex;
+export const BarCode = styled.Image``;
+export const ContentBarCode = styled.View`
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  padding: 24px 0;
 `;
-
-export const BarCodeImage = styled.Image``;
-
-export const LoginText = styled.Text`
-  margin-top: 20px;
-  width: 100%;
-  max-width: 250px;
-
-  font-family: "Lexend-Bold";
-  font-style: normal;
-  font-weight: 600;
+export const Title = styled.Text`
+  margin-top: 24px;
+  font-family: "Lexend-SemiBold";
   font-size: 32px;
   line-height: 40px;
-  /* or 125% */
-
   text-align: center;
-
-  /* Texts/heading */
-
   color: #585666;
+  margin-bottom: 40px;
+
+  max-width: 236px;
 `;
 
-export const ButtonSigInWithGoogle = styled.View`
-  margin-top: 30px;
+export const Icon = styled.Image``;
+export const ButtonAddSlip = styled.TouchableOpacity`
+  position: relative;
+  top: -44%;
+  left: -21%;
+  width: 48px;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  background: #585666;
+  border-radius: 5px;
+`;
+
+export const ButtonExtract = styled.TouchableOpacity`
+  position: relative;
+  top: -98%;
+  left: 24%;
+  width: 48px;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  background: #585666;
+  border-radius: 5px;
 `;

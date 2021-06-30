@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 
-export const SlipContainer = styled.View`
+export const SlipContainer = styled.TouchableOpacity`
   margin: 16px 0;
   width: 100%;
   flex-direction: row;

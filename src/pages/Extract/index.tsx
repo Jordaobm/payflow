@@ -1,11 +1,8 @@
 import React from "react";
-import { View, Text, StatusBar, ScrollView } from "react-native";
-import { useUser } from "../../contexts/user";
 import {
   BolderText,
   Container,
   ContentMySlips,
-  ContentPaymentSlipCard,
   ContentSlips,
   ContentText,
   EmptyView,
@@ -18,16 +15,16 @@ import {
   WelcomeText,
 } from "./styles";
 import RadialGradient from "react-native-radial-gradient";
-import { PaymentSlipCard } from "../../components/PaymentSlipCard";
-import { CardSlip } from "../../components/CardSlip";
+import { useUser } from "../../contexts/user";
 import { Navigation } from "../../components/Navigation";
+import { ScrollView } from "react-native";
+import { CardSlip } from "../../components/CardSlip";
 
-const Home: React.FC = () => {
+export const Extract = () => {
   const { user, slips } = useUser();
 
   return (
     <Container>
-      <StatusBar barStyle="light-content" backgroundColor="#FF941A" />
       <RadialGradient
         style={{ width: "100%", height: "23%" }}
         colors={["#FFC480", "#FF941A"]}
@@ -45,30 +42,25 @@ const Home: React.FC = () => {
         </ProfileData>
       </RadialGradient>
 
-      <ContentPaymentSlipCard>
-        <PaymentSlipCard />
-      </ContentPaymentSlipCard>
-
       <ContentMySlips>
-        <MySplips>Meus boletos</MySplips>
+        <MySplips>Meus extratos</MySplips>
         <TotalSplips>
-          {slips.filter((slip) => slip.paid === false).length} ao total
+          {slips.filter((slip) => slip.paid).length} ao total
         </TotalSplips>
       </ContentMySlips>
       <FillSeparatorMySlips />
       <ScrollView>
         <ContentSlips>
           {slips
-            .filter((slip) => slip.paid === false)
+            .filter((slip) => slip.paid)
             .map((slip, index) => (
-              <CardSlip edit slip={slip} key={index} />
+              <CardSlip slip={slip} key={index} />
             ))}
         </ContentSlips>
         <EmptyView />
       </ScrollView>
-      <Navigation page="Home" />
+
+      <Navigation page="Extract" />
     </Container>
   );
 };
-
-export default Home;

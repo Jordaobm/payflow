@@ -14,9 +14,18 @@ export interface User {
   loginDate: Date;
 }
 
+export interface Slip {
+  name: string;
+  dueDate: Date;
+  value: number;
+  everyMonth: boolean;
+  paid: boolean;
+}
+
 interface UserContextData {
   user: User;
   handleSigInWithGoogle(): Promise<User | undefined>;
+  slips: Slip[];
 }
 
 const UserContext = createContext({} as UserContextData);
@@ -32,6 +41,58 @@ export const UserProvider = ({
 }: UserProviderProps) => {
   const [user, setUser] = useState<User>(initialDataUser ?? ({} as User));
 
+  const [slips, setSlips] = useState<Slip[]>([
+    {
+      name: "Conta Vivo Fixo",
+      dueDate: new Date(),
+      value: 134,
+      everyMonth: true,
+      paid: true,
+    },
+    {
+      name: "Conta Vivo Celular",
+      dueDate: new Date(),
+      value: 43,
+      everyMonth: true,
+      paid: true,
+    },
+    {
+      name: "RTX 3070",
+      dueDate: new Date(),
+      value: 8499.9,
+      everyMonth: false,
+      paid: true,
+    },
+    {
+      name: "Aluguel",
+      dueDate: new Date(),
+      value: 500,
+      everyMonth: false,
+      paid: false,
+    },
+    {
+      name: "Luz",
+      dueDate: new Date(),
+      value: 100,
+      everyMonth: false,
+      paid: false,
+    },
+    {
+      name: "Água",
+      dueDate: new Date(),
+      value: 90,
+      everyMonth: false,
+      paid: false,
+    },
+    {
+      name: "Água",
+      dueDate: new Date(),
+      value: 90,
+      everyMonth: false,
+      paid: false,
+    },
+  ]);
+
   const saveInLocalStorage = async (key: string, data: any) => {
     await AsyncStorage.setItem(`@PayFlow-${key}`, JSON.stringify(data));
   };
@@ -46,8 +107,6 @@ export const UserProvider = ({
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
     const response = await auth().signInWithCredential(googleCredential);
-
-    console.log(response);
 
     if (
       response?.user?.displayName &&
@@ -68,7 +127,7 @@ export const UserProvider = ({
   };
 
   return (
-    <UserContext.Provider value={{ user, handleSigInWithGoogle }}>
+    <UserContext.Provider value={{ user, handleSigInWithGoogle, slips }}>
       {children}
     </UserContext.Provider>
   );
