@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { Slip } from "../../contexts/user";
 import { formatCurrency } from "../../utils/formatValue";
+import { StringToDate } from "../../utils/StringToDate";
 import { Modal } from "../Modal";
 
 import {
@@ -30,10 +31,10 @@ export const CardSlip = ({ slip, edit = false }: CardSlipProps) => {
         <SlipInfo>
           <SlipName>{slip.name}</SlipName>
           <SlipDuoDate>
-            Vence em {format(slip.dueDate, "dd'/'MM'/'yyyy")}
+            Vence em {format(StringToDate(slip.dueDate), "dd'/'MM'/'yyyy")}
           </SlipDuoDate>
         </SlipInfo>
-        <SlipValue>{formatCurrency(slip.value)}</SlipValue>
+        <SlipValue>{formatCurrency(Number(slip.value))}</SlipValue>
       </SlipContainer>
     </>
   );

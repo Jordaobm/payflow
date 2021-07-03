@@ -14,6 +14,7 @@ import wallet from "../../assets/images/wallet-line.png";
 import barCodeSlip from "../../assets/images/barCodeSlip.png";
 import people from "../../assets/images/people.png";
 import barCode from "../../assets/images/barCode.png";
+import calendar from "../../assets/images/calendar.png";
 
 export {
   iconAdd,
@@ -32,4 +33,5 @@ export {
   barCodeSlip,
   people,
   barCode,
+  calendar,
 };

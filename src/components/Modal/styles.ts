@@ -90,7 +90,10 @@ export const DeleteButton = styled.TouchableOpacity`
   align-items: center;
 `;
 
-export const IconTrash = styled.Image``;
+export const IconTrash = styled.Image`
+  width: 18px;
+  height: 18px;
+`;
 
 export const DeleteSlip = styled.Text`
   margin-left: 16px;

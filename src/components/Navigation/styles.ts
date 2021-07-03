@@ -23,7 +23,10 @@ export const ButtonHome = styled.TouchableOpacity`
   align-items: center;
 `;
 
-export const Image = styled.Image``;
+export const Image = styled.Image`
+  width: 22px;
+  height: 22px;
+`;
 
 export const ButtonAddSlip = styled.TouchableOpacity`
   width: 56px;

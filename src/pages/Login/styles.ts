@@ -17,7 +17,10 @@ export const People = styled.Image`
   top: 15%;
 `;
 
-export const BarCode = styled.Image``;
+export const BarCode = styled.Image`
+  width: 72px;
+  height: 44px;
+`;
 export const ContentBarCode = styled.View`
   justify-content: center;
   align-items: center;
@@ -35,7 +38,10 @@ export const Title = styled.Text`
   max-width: 236px;
 `;
 
-export const Icon = styled.Image``;
+export const Icon = styled.Image`
+  width: 22px;
+  height: 22px;
+`;
 export const ButtonAddSlip = styled.TouchableOpacity`
   position: relative;
   top: -44%;

@@ -25,6 +25,8 @@ import { Navigation } from "../../components/Navigation";
 const Home: React.FC = () => {
   const { user, slips } = useUser();
 
+  console.log(slips);
+
   return (
     <Container>
       <StatusBar barStyle="light-content" backgroundColor="#FF941A" />

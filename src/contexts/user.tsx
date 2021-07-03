@@ -5,21 +5,26 @@ import { createContext, ReactNode } from "react";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import auth from "@react-native-firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect } from "react";
 import { WEBCLIENTID } from "@env";
-
+import { saveUserData } from "../services/database";
+import { useEffect } from "react";
+import { useSlips } from "./useSlips";
 export interface User {
+  databaseId?: string;
+  id: string;
   name: string;
   avatar_url: string;
   loginDate: Date;
 }
 
 export interface Slip {
+  databaseId?: string;
   name: string;
-  dueDate: Date;
-  value: number;
+  dueDate: string;
+  value: string;
   everyMonth: boolean;
   paid: boolean;
+  code?: string;
 }
 
 interface UserContextData {
@@ -40,62 +45,13 @@ export const UserProvider = ({
   initialDataUser,
 }: UserProviderProps) => {
   const [user, setUser] = useState<User>(initialDataUser ?? ({} as User));
-
-  const [slips, setSlips] = useState<Slip[]>([
-    {
-      name: "Conta Vivo Fixo",
-      dueDate: new Date(),
-      value: 134,
-      everyMonth: true,
-      paid: true,
-    },
-    {
-      name: "Conta Vivo Celular",
-      dueDate: new Date(),
-      value: 43,
-      everyMonth: true,
-      paid: true,
-    },
-    {
-      name: "RTX 3070",
-      dueDate: new Date(),
-      value: 8499.9,
-      everyMonth: false,
-      paid: true,
-    },
-    {
-      name: "Aluguel",
-      dueDate: new Date(),
-      value: 500,
-      everyMonth: false,
-      paid: false,
-    },
-    {
-      name: "Luz",
-      dueDate: new Date(),
-      value: 100,
-      everyMonth: false,
-      paid: false,
-    },
-    {
-      name: "Água",
-      dueDate: new Date(),
-      value: 90,
-      everyMonth: false,
-      paid: false,
-    },
-    {
-      name: "Água",
-      dueDate: new Date(),
-      value: 90,
-      everyMonth: false,
-      paid: false,
-    },
-  ]);
+  const slips = useSlips(user);
 
   const saveInLocalStorage = async (key: string, data: any) => {
     await AsyncStorage.setItem(`@PayFlow-${key}`, JSON.stringify(data));
   };
+
+  console.log("user", user);
 
   const handleSigInWithGoogle = async () => {
     GoogleSignin.configure({
@@ -113,14 +69,17 @@ export const UserProvider = ({
       response?.additionalUserInfo?.profile?.picture
     ) {
       const userData = {
+        id: response?.user.uid,
         name: response?.user?.displayName,
         avatar_url: response?.additionalUserInfo?.profile?.picture,
         loginDate: new Date(),
       };
 
-      setUser(userData);
+      const databaseId = await saveUserData(userData);
 
-      saveInLocalStorage("user", userData);
+      setUser({ ...userData, databaseId: databaseId ?? "" });
+
+      saveInLocalStorage("user", { ...userData, databaseId: databaseId ?? "" });
 
       return userData;
     }

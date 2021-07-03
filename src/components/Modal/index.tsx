@@ -2,8 +2,9 @@ import React from "react";
 import { Button } from "react-native";
 import { Text, View } from "react-native-animatable";
 import ReactModal from "react-native-modal";
-import { Slip } from "../../contexts/user";
+import { Slip, useUser } from "../../contexts/user";
 import { trash } from "../../icons";
+import { deleteSlip, updateSlip } from "../../services/database";
 import { formatCurrency } from "../../utils/formatValue";
 import {
   Actions,
@@ -27,41 +28,56 @@ interface ModalProps {
   slip: Slip;
 }
 
-export const Modal = ({ closeModal, isOpen, slip }: ModalProps) => (
-  <View>
-    <ReactModal
-      onSwipeComplete={() => closeModal(false)}
-      swipeDirection="down"
-      testID={"modal"}
-      isVisible={isOpen}
-      style={{
-        justifyContent: "flex-end",
-        margin: 0,
-      }}
-    >
-      <Container>
-        <Fill />
-        <SlipInfo>
-          O boleto <BolderText>{slip.name}</BolderText> no valor de{" "}
-          <BolderText>{formatCurrency(slip.value)}</BolderText> foi pago?
-        </SlipInfo>
+export const Modal = ({ closeModal, isOpen, slip }: ModalProps) => {
+  const { user } = useUser();
 
-        <Actions>
-          <CancelButton onPress={() => closeModal(false)}>
-            <TextCancelButton>Ainda não</TextCancelButton>
-          </CancelButton>
-          <ConfirmButton onPress={() => closeModal(false)}>
-            <TextConfirmButton>Sim</TextConfirmButton>
-          </ConfirmButton>
-        </Actions>
+  return (
+    <View>
+      <ReactModal
+        onSwipeComplete={() => closeModal(false)}
+        swipeDirection="down"
+        testID={"modal"}
+        isVisible={isOpen}
+        style={{
+          justifyContent: "flex-end",
+          margin: 0,
+        }}
+      >
+        <Container>
+          <Fill />
+          <SlipInfo>
+            O boleto <BolderText>{slip.name}</BolderText> no valor de{" "}
+            <BolderText>{formatCurrency(Number(slip.value))}</BolderText> foi
+            pago?
+          </SlipInfo>
 
-        <FillBottom />
+          <Actions>
+            <CancelButton onPress={() => closeModal(false)}>
+              <TextCancelButton>Ainda não</TextCancelButton>
+            </CancelButton>
+            <ConfirmButton
+              onPress={() => {
+                updateSlip(slip, user);
+                closeModal(false);
+              }}
+            >
+              <TextConfirmButton>Sim</TextConfirmButton>
+            </ConfirmButton>
+          </Actions>
 
-        <DeleteButton onPress={() => closeModal(false)}>
-          <IconTrash source={trash} />
-          <DeleteSlip>Deletar boleto</DeleteSlip>
-        </DeleteButton>
-      </Container>
-    </ReactModal>
-  </View>
-);
+          <FillBottom />
+
+          <DeleteButton
+            onPress={() => {
+              deleteSlip(slip, user);
+              closeModal(false);
+            }}
+          >
+            <IconTrash source={trash} />
+            <DeleteSlip>Deletar boleto</DeleteSlip>
+          </DeleteButton>
+        </Container>
+      </ReactModal>
+    </View>
+  );
+};

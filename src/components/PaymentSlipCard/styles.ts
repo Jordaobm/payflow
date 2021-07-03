@@ -17,7 +17,10 @@ export const BarCodeContent = styled.View`
   align-items: center;
   justify-content: space-between;
 `;
-export const BarCodeImage = styled.Image``;
+export const BarCodeImage = styled.Image`
+  width: 56px;
+  height: 34.22px;
+`;
 export const Fill = styled.View`
   width: 1px;
   height: 32px;

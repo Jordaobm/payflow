@@ -34,7 +34,10 @@ export const ContentText = styled.View`
   align-items: center;
 `;
 
-export const Image = styled.Image``;
+export const Image = styled.Image`
+  width: 24px;
+  height: 24.49px;
+`;
 
 export const TextGoogleButton = styled.Text`
   font-family: "Lexend-Regular";
