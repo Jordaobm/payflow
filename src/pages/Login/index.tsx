@@ -13,7 +13,6 @@ import {
   People,
   Title,
 } from "./styles";
-import RadialGradient from "react-native-radial-gradient";
 import { barCode, iconAdd, iconList, people } from "../../icons";
 import { SigInWithGoogle } from "../../components/SigInWithGoogle";
 import { StatusBar } from "react-native";

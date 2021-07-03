@@ -12,7 +12,7 @@ import {
   wallet,
   x,
 } from "../../icons";
-import { saveSlip } from "../../services/database";
+import { saveSlip } from "../../services/FirestoreDatabase";
 import {
   Actions,
   ArrowLeft,
@@ -34,13 +34,14 @@ import {
 export const NewSlip = () => {
   const [slip, setSlip] = useState<Slip>({} as Slip);
 
-  const { user } = useUser();
+  const { user, loadSlips } = useUser();
 
   const navigation = useNavigation();
 
   const handleSaveSlip = async () => {
     if (slip.name && slip.value) {
-      await saveSlip({ ...slip, paid: false }, user);
+      await saveSlip(user, { ...slip, paid: false });
+      await loadSlips();
       navigation.navigate("Home");
     }
   };

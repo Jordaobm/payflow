@@ -4,11 +4,14 @@ import { useState } from "react";
 import { User, UserProvider } from "./contexts/user";
 import { Routes } from "./routes";
 
+import SplashScreen from "react-native-splash-screen";
+
 export function App() {
   const [initialDataUser, setInitialDataUser] = useState<User>();
 
   useEffect(() => {
     getUserLocalStorage();
+    SplashScreen.hide();
   }, []);
 
   const getUserLocalStorage = async () => {

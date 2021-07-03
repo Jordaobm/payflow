@@ -8,7 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WEBCLIENTID } from "@env";
 import { saveUserData } from "../services/database";
 import { useEffect } from "react";
-import { useSlips } from "./useSlips";
+import { getSlips, login } from "../services/FirestoreDatabase";
 export interface User {
   databaseId?: string;
   id: string;
@@ -31,6 +31,7 @@ interface UserContextData {
   user: User;
   handleSigInWithGoogle(): Promise<User | undefined>;
   slips: Slip[];
+  loadSlips(): Promise<void>;
 }
 
 const UserContext = createContext({} as UserContextData);
@@ -45,13 +46,20 @@ export const UserProvider = ({
   initialDataUser,
 }: UserProviderProps) => {
   const [user, setUser] = useState<User>(initialDataUser ?? ({} as User));
-  const slips = useSlips(user);
+  const [slips, setSlips] = useState<Slip[]>([]);
+
+  const loadSlips = async () => {
+    const slipsdb = await getSlips(user);
+    setSlips(slipsdb);
+  };
+
+  useEffect(() => {
+    loadSlips();
+  }, []);
 
   const saveInLocalStorage = async (key: string, data: any) => {
     await AsyncStorage.setItem(`@PayFlow-${key}`, JSON.stringify(data));
   };
-
-  console.log("user", user);
 
   const handleSigInWithGoogle = async () => {
     GoogleSignin.configure({
@@ -75,18 +83,20 @@ export const UserProvider = ({
         loginDate: new Date(),
       };
 
-      const databaseId = await saveUserData(userData);
+      const userLogin = await login(userData);
 
-      setUser({ ...userData, databaseId: databaseId ?? "" });
+      setUser(userLogin);
 
-      saveInLocalStorage("user", { ...userData, databaseId: databaseId ?? "" });
+      saveInLocalStorage("user", userLogin);
 
       return userData;
     }
   };
 
   return (
-    <UserContext.Provider value={{ user, handleSigInWithGoogle, slips }}>
+    <UserContext.Provider
+      value={{ user, handleSigInWithGoogle, slips, loadSlips }}
+    >
       {children}
     </UserContext.Provider>
   );

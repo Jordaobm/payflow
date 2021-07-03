@@ -6,6 +6,7 @@ export const Container = styled.View`
   height: 270px;
 
   align-items: center;
+  justify-content: space-between;
 `;
 
 export const Fill = styled.View`
@@ -101,4 +102,13 @@ export const DeleteSlip = styled.Text`
   font-size: 15px;
   line-height: 18px;
   color: #e83f5b;
+`;
+
+export const ButtonDeleteContainer = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /* background-color: red; */
+  margin-bottom: 15px;
 `;

@@ -4,11 +4,12 @@ import { Text, View } from "react-native-animatable";
 import ReactModal from "react-native-modal";
 import { Slip, useUser } from "../../contexts/user";
 import { trash } from "../../icons";
-import { deleteSlip, updateSlip } from "../../services/database";
+import { deleteSlip, updateSlip } from "../../services/FirestoreDatabase";
 import { formatCurrency } from "../../utils/formatValue";
 import {
   Actions,
   BolderText,
+  ButtonDeleteContainer,
   CancelButton,
   ConfirmButton,
   Container,
@@ -26,10 +27,16 @@ interface ModalProps {
   isOpen: boolean;
   closeModal: (value: boolean) => void;
   slip: Slip;
+  type?: "HOME" | "EXTRACT";
 }
 
-export const Modal = ({ closeModal, isOpen, slip }: ModalProps) => {
-  const { user } = useUser();
+export const Modal = ({
+  closeModal,
+  isOpen,
+  slip,
+  type = "HOME",
+}: ModalProps) => {
+  const { loadSlips } = useUser();
 
   return (
     <View>
@@ -51,31 +58,36 @@ export const Modal = ({ closeModal, isOpen, slip }: ModalProps) => {
             pago?
           </SlipInfo>
 
-          <Actions>
-            <CancelButton onPress={() => closeModal(false)}>
-              <TextCancelButton>Ainda não</TextCancelButton>
-            </CancelButton>
-            <ConfirmButton
+          {type === "HOME" && (
+            <Actions>
+              <CancelButton onPress={() => closeModal(false)}>
+                <TextCancelButton>Ainda não</TextCancelButton>
+              </CancelButton>
+              <ConfirmButton
+                onPress={() => {
+                  updateSlip(slip);
+                  loadSlips();
+                  closeModal(false);
+                }}
+              >
+                <TextConfirmButton>Sim</TextConfirmButton>
+              </ConfirmButton>
+            </Actions>
+          )}
+          <ButtonDeleteContainer>
+            <FillBottom />
+
+            <DeleteButton
               onPress={() => {
-                updateSlip(slip, user);
+                deleteSlip(slip);
+                loadSlips();
                 closeModal(false);
               }}
             >
-              <TextConfirmButton>Sim</TextConfirmButton>
-            </ConfirmButton>
-          </Actions>
-
-          <FillBottom />
-
-          <DeleteButton
-            onPress={() => {
-              deleteSlip(slip, user);
-              closeModal(false);
-            }}
-          >
-            <IconTrash source={trash} />
-            <DeleteSlip>Deletar boleto</DeleteSlip>
-          </DeleteButton>
+              <IconTrash source={trash} />
+              <DeleteSlip>Deletar boleto</DeleteSlip>
+            </DeleteButton>
+          </ButtonDeleteContainer>
         </Container>
       </ReactModal>
     </View>

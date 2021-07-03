@@ -193,6 +193,7 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-firebase_firestore')
     implementation project(':react-native-linear-gradient')
     implementation 'com.firebaseui:firebase-ui-auth:6.4.0'
     implementation platform('com.google.firebase:firebase-bom:28.2.0')

@@ -30,7 +30,11 @@ export const Navigation = ({ page }: NavigationProps) => {
       <ButtonHome onPress={() => navigation.navigate("Home")}>
         <Image source={homeIcon} />
       </ButtonHome>
-      <ButtonAddSlip onPress={() => navigation.navigate("NewSlip")}>
+      <ButtonAddSlip
+        onPress={async () => {
+          navigation.navigate("NewSlip");
+        }}
+      >
         <Image source={iconAdd} />
       </ButtonAddSlip>
       <ButtonExtract onPress={() => navigation.navigate("Extract")}>

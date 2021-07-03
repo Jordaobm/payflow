@@ -17,15 +17,25 @@ import {
 interface CardSlipProps {
   slip: Slip;
   edit?: boolean;
+  type?: "HOME" | "EXTRACT";
 }
 
-export const CardSlip = ({ slip, edit = false }: CardSlipProps) => {
+export const CardSlip = ({
+  slip,
+  edit = false,
+  type = "HOME",
+}: CardSlipProps) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
       {showModal && (
-        <Modal closeModal={setShowModal} isOpen={showModal} slip={slip} />
+        <Modal
+          type={type}
+          closeModal={setShowModal}
+          isOpen={showModal}
+          slip={slip}
+        />
       )}
       <SlipContainer onPress={() => edit && setShowModal(true)}>
         <SlipInfo>

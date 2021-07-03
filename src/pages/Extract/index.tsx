@@ -54,7 +54,7 @@ export const Extract = () => {
           {slips
             .filter((slip) => slip.paid)
             .map((slip, index) => (
-              <CardSlip slip={slip} key={index} />
+              <CardSlip type="EXTRACT" edit slip={slip} key={index} />
             ))}
         </ContentSlips>
         <EmptyView />
