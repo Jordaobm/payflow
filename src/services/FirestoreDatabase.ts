@@ -82,7 +82,7 @@ export async function saveSlip(user: User, slip: Slip) {
 }
 
 export async function getSlips(user: User) {
-  if (user) {
+  if (user.id) {
     const slips = await firestore()
       .collection("slips")
       .where("userId", "==", user.id)

@@ -48,9 +48,18 @@ export const UserProvider = ({
   const [user, setUser] = useState<User>(initialDataUser ?? ({} as User));
   const [slips, setSlips] = useState<Slip[]>([]);
 
+  // const clearLocalStorage = async () => {
+  //   await AsyncStorage.clear();
+  //   console.log("limpou");
+  // };
+  // clearLocalStorage();
+
   const loadSlips = async () => {
     const slipsdb = await getSlips(user);
-    setSlips(slipsdb);
+
+    if (slipsdb) {
+      setSlips(slipsdb);
+    }
   };
 
   useEffect(() => {
@@ -85,11 +94,11 @@ export const UserProvider = ({
 
       const userLogin = await login(userData);
 
-      setUser(userLogin);
-
-      saveInLocalStorage("user", userLogin);
-
-      return userData;
+      if (userLogin) {
+        setUser(userLogin);
+        saveInLocalStorage("user", userLogin);
+        return userData;
+      }
     }
   };
 

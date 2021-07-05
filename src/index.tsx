@@ -5,6 +5,7 @@ import { User, UserProvider } from "./contexts/user";
 import { Routes } from "./routes";
 
 import SplashScreen from "react-native-splash-screen";
+import { login } from "./services/FirestoreDatabase";
 
 export function App() {
   const [initialDataUser, setInitialDataUser] = useState<User>();
@@ -17,7 +18,11 @@ export function App() {
   const getUserLocalStorage = async () => {
     const localUser = await AsyncStorage.getItem("@PayFlow-user");
     if (localUser) {
-      setInitialDataUser(JSON.parse(localUser));
+      const parsedUser = JSON.parse(localUser);
+      const userLogin = await login(parsedUser);
+      if (userLogin) {
+        setInitialDataUser(userLogin);
+      }
       // setInitialDataUser({} as User); // desloga usuário
     } else {
       setInitialDataUser({} as User);
