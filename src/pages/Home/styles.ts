@@ -73,7 +73,7 @@ export const TotalSplips = styled.Text`
 export const FillSeparatorMySlips = styled.View`
   height: 1px;
   background-color: #e3e3e6;
-  margin: 24px 24px 32px 24px;
+  margin: 24px 24px 16px 24px;
 `;
 
 export const ContentSlips = styled.View`

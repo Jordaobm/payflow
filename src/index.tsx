@@ -1,19 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect } from "react";
+import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { User, UserProvider } from "./contexts/user";
 import { Routes } from "./routes";
 
-import SplashScreen from "react-native-splash-screen";
 import { login } from "./services/FirestoreDatabase";
 
 export function App() {
   const [initialDataUser, setInitialDataUser] = useState<User>();
-
-  useEffect(() => {
-    getUserLocalStorage();
-    SplashScreen.hide();
-  }, []);
 
   const getUserLocalStorage = async () => {
     const localUser = await AsyncStorage.getItem("@PayFlow-user");
@@ -23,11 +18,14 @@ export function App() {
       if (userLogin) {
         setInitialDataUser(userLogin);
       }
-      // setInitialDataUser({} as User); // desloga usuário
     } else {
       setInitialDataUser({} as User);
     }
   };
+
+  useEffect(() => {
+    getUserLocalStorage();
+  }, []);
 
   if (initialDataUser) {
     return (

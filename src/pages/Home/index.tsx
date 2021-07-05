@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StatusBar, ScrollView } from "react-native";
 import { useUser } from "../../contexts/user";
 import {
@@ -21,9 +21,13 @@ import RadialGradient from "react-native-radial-gradient";
 import { PaymentSlipCard } from "../../components/PaymentSlipCard";
 import { CardSlip } from "../../components/CardSlip";
 import { Navigation } from "../../components/Navigation";
+import { SigInWithGoogle } from "../../components/SigInWithGoogle";
 
 const Home: React.FC = () => {
   const { user, slips } = useUser();
+
+  const [loading, setLoading] = useState(true);
+
   return (
     <Container>
       <StatusBar barStyle="light-content" backgroundColor="#FF941A" />
@@ -36,7 +40,7 @@ const Home: React.FC = () => {
         <ProfileData>
           <Welcome>
             <WelcomeText>
-              Olá, <BolderText>{user.name.split(" ")[0]}</BolderText>
+              Olá, <BolderText>{user?.name?.split(" ")[0]}</BolderText>
             </WelcomeText>
             <ContentText>Mantenha suas contas em dia</ContentText>
           </Welcome>
@@ -63,8 +67,10 @@ const Home: React.FC = () => {
               <CardSlip edit slip={slip} key={index} />
             ))}
         </ContentSlips>
+
         <EmptyView />
       </ScrollView>
+
       <Navigation page="Home" />
     </Container>
   );

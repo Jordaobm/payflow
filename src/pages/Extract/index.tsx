@@ -34,7 +34,7 @@ export const Extract = () => {
         <ProfileData>
           <Welcome>
             <WelcomeText>
-              Olá, <BolderText>{user.name.split(" ")[0]}</BolderText>
+              Olá, <BolderText>{user?.name?.split(" ")[0]}</BolderText>
             </WelcomeText>
             <ContentText>Mantenha suas contas em dia</ContentText>
           </Welcome>

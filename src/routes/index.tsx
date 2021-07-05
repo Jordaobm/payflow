@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "../pages/Home";
@@ -6,6 +6,7 @@ import { Login } from "../pages/Login";
 import { useUser } from "../contexts/user";
 import { Extract } from "../pages/Extract";
 import { NewSlip } from "../pages/NewSlip";
+import SplashScreen from "react-native-splash-screen";
 
 const Stack = createStackNavigator();
 
@@ -13,6 +14,12 @@ export const Routes = () => {
   const { user } = useUser();
 
   const initialRoute = user?.name ? "Home" : "Login";
+
+  useEffect(() => {
+    if (initialRoute === "Home" || initialRoute === "Login") {
+      SplashScreen.hide();
+    }
+  }, []);
 
   return (
     <NavigationContainer>

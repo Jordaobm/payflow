@@ -53,7 +53,7 @@ export const Modal = ({
         <Container>
           <Fill />
           <SlipInfo>
-            O boleto <BolderText>{slip.name}</BolderText> no valor de{" "}
+            O boleto <BolderText>{slip.name}</BolderText> no valor de {""}
             <BolderText>{formatCurrency(Number(slip.value))}</BolderText> foi
             pago?
           </SlipInfo>

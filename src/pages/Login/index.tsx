@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useUser } from "../../contexts/user";
 import { useNavigation } from "@react-navigation/native";
@@ -19,6 +19,8 @@ import { StatusBar } from "react-native";
 
 export const Login = () => {
   const { handleSigInWithGoogle, user } = useUser();
+
+  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
 
@@ -46,12 +48,15 @@ export const Login = () => {
         <BarCode source={barCode} />
         <Title>Organize seus boletos em um só lugar</Title>
         <SigInWithGoogle
+          loading={loading}
           title="SigIn With Google"
           onPress={async () => {
+            setLoading(true);
             const logged = await handleSigInWithGoogle();
 
             if (logged?.name) {
               navigation.navigate("Home");
+              setLoading(false);
             }
           }}
         />

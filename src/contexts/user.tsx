@@ -63,8 +63,10 @@ export const UserProvider = ({
   };
 
   useEffect(() => {
-    loadSlips();
-  }, []);
+    if (user.id) {
+      loadSlips();
+    }
+  }, [user]);
 
   const saveInLocalStorage = async (key: string, data: any) => {
     await AsyncStorage.setItem(`@PayFlow-${key}`, JSON.stringify(data));
@@ -97,6 +99,7 @@ export const UserProvider = ({
       if (userLogin) {
         setUser(userLogin);
         saveInLocalStorage("user", userLogin);
+        // loadSlips();
         return userData;
       }
     }

@@ -1,5 +1,10 @@
 import React from "react";
-import { ButtonProps, Text, TouchableHighlight } from "react-native";
+import {
+  ActivityIndicator,
+  ButtonProps,
+  Text,
+  TouchableHighlight,
+} from "react-native";
 import { iconGoogle } from "../../icons";
 import {
   ButtonStyle,
@@ -7,21 +12,32 @@ import {
   ContentText,
   Fill,
   Image,
+  Loading,
   TextGoogleButton,
 } from "./styles";
 
-interface SmallButtonProps extends ButtonProps {}
+interface SmallButtonProps extends ButtonProps {
+  loading: boolean;
+}
 
-export const SigInWithGoogle = ({ ...rest }: SmallButtonProps) => {
+export const SigInWithGoogle = ({ loading, ...rest }: SmallButtonProps) => {
   return (
     <ButtonStyle {...rest}>
-      <ContentImageGoogle>
-        <Image source={iconGoogle} />
-      </ContentImageGoogle>
-      <Fill />
-      <ContentText>
-        <TextGoogleButton>Entrar com o Google</TextGoogleButton>
-      </ContentText>
+      {loading ? (
+        <Loading>
+          <ActivityIndicator size="large" color="#FF941A" />
+        </Loading>
+      ) : (
+        <>
+          <ContentImageGoogle>
+            <Image source={iconGoogle} />
+          </ContentImageGoogle>
+          <Fill />
+          <ContentText>
+            <TextGoogleButton>Entrar com o Google</TextGoogleButton>
+          </ContentText>
+        </>
+      )}
     </ButtonStyle>
   );
 };

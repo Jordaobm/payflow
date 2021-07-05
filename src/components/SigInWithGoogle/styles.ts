@@ -48,3 +48,9 @@ export const TextGoogleButton = styled.Text`
 
   color: #666666;
 `;
+
+export const Loading = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;

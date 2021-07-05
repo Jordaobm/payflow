@@ -109,6 +109,5 @@ export const ButtonDeleteContainer = styled.View`
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* background-color: red; */
   margin-bottom: 15px;
 `;
