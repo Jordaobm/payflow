@@ -1,27 +1,25 @@
 import React from "react";
 import {
-  BolderText,
   Container,
   ContentMySlips,
   ContentSlips,
-  ContentText,
   EmptyView,
   FillSeparatorMySlips,
   MySplips,
-  ProfileData,
-  ProfileImage,
   TotalSplips,
-  Welcome,
-  WelcomeText,
 } from "./styles";
 import RadialGradient from "react-native-radial-gradient";
 import { useUser } from "../../contexts/user";
 import { Navigation } from "../../components/Navigation";
 import { ScrollView } from "react-native";
 import { CardSlip } from "../../components/CardSlip";
+import { useNavigation } from "@react-navigation/native";
+import { Profile } from "../../components/Profile";
 
 export const Extract = () => {
-  const { user, slips } = useUser();
+  const { user, slips, handleLogoff } = useUser();
+
+  const navigation = useNavigation();
 
   return (
     <Container>
@@ -31,15 +29,7 @@ export const Extract = () => {
         center={[200, 150]}
         radius={150}
       >
-        <ProfileData>
-          <Welcome>
-            <WelcomeText>
-              Olá, <BolderText>{user?.name?.split(" ")[0]}</BolderText>
-            </WelcomeText>
-            <ContentText>Mantenha suas contas em dia</ContentText>
-          </Welcome>
-          <ProfileImage source={{ uri: user.avatar_url }} />
-        </ProfileData>
+        <Profile />
       </RadialGradient>
 
       <ContentMySlips>

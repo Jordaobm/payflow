@@ -52,13 +52,19 @@ export const Modal = ({
       >
         <Container>
           <Fill />
-          <SlipInfo>
-            O boleto <BolderText>{slip.name}</BolderText> no valor de {""}
-            <BolderText>{formatCurrency(Number(slip.value))}</BolderText> foi
-            pago?
-          </SlipInfo>
+          {!slip?.paid ? (
+            <SlipInfo>
+              O boleto <BolderText>{slip.name}</BolderText> no valor de {""}
+              <BolderText>{formatCurrency(Number(slip.value))}</BolderText> foi
+              pago?
+            </SlipInfo>
+          ) : (
+            <SlipInfo>
+              Deseja deletar o boleto <BolderText>{slip.name}</BolderText>?
+            </SlipInfo>
+          )}
 
-          {type === "HOME" && (
+          {!slip?.paid && (
             <Actions>
               <CancelButton onPress={() => closeModal(false)}>
                 <TextCancelButton>Ainda não</TextCancelButton>

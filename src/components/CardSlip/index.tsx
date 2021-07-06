@@ -7,6 +7,7 @@ import { StringToDate } from "../../utils/StringToDate";
 import { Modal } from "../Modal";
 
 import {
+  EveryMonth,
   SlipContainer,
   SlipDuoDate,
   SlipInfo,
@@ -39,12 +40,21 @@ export const CardSlip = ({
       )}
       <SlipContainer onPress={() => edit && setShowModal(true)}>
         <SlipInfo>
-          <SlipName>{slip.name}</SlipName>
-          <SlipDuoDate>
-            Vence em {format(StringToDate(slip.dueDate), "dd'/'MM'/'yyyy")}
+          <SlipName slip={type === "EXTRACT" ? ({} as Slip) : slip}>
+            {slip.name}
+          </SlipName>
+          <SlipDuoDate slip={type === "EXTRACT" ? ({} as Slip) : slip}>
+            Vence em {format(StringToDate(slip.dueDate), "dd'/'MM'/'yyyy")} {""}
+            {slip.everyMonth && (
+              <EveryMonth slip={type === "EXTRACT" ? ({} as Slip) : slip}>
+                recorrente
+              </EveryMonth>
+            )}
           </SlipDuoDate>
         </SlipInfo>
-        <SlipValue>{formatCurrency(Number(slip.value))}</SlipValue>
+        <SlipValue slip={type === "EXTRACT" ? ({} as Slip) : slip}>
+          {formatCurrency(Number(slip.value))}
+        </SlipValue>
       </SlipContainer>
     </>
   );

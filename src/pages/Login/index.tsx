@@ -54,6 +54,10 @@ export const Login = () => {
             setLoading(true);
             const logged = await handleSigInWithGoogle();
 
+            if (!logged) {
+              setLoading(false);
+            }
+
             if (logged?.name) {
               navigation.navigate("Home");
               setLoading(false);

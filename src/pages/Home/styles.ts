@@ -5,43 +5,6 @@ export const Container = styled.View`
   background-color: white;
 `;
 
-export const ProfileData = styled.View`
-  display: flex;
-  padding: 0 24px;
-  margin-top: 30px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const Welcome = styled.View``;
-
-export const WelcomeText = styled.Text`
-  font-family: "Lexend-Regular";
-  font-size: 20px;
-  line-height: 25px;
-
-  color: #ffffff;
-`;
-
-export const BolderText = styled.Text`
-  font-family: "Lexend-SemiBold";
-`;
-
-export const ContentText = styled.Text`
-  font-family: "Lexend-Regular";
-  margin-top: 4px;
-  font-size: 13px;
-  line-height: 16px;
-  color: #fafafc;
-`;
-
-export const ProfileImage = styled.Image`
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-`;
-
 export const ContentPaymentSlipCard = styled.View`
   position: relative;
   top: -6%;

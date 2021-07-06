@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { Slip } from "../../contexts/user";
 
 export const SlipContainer = styled.TouchableOpacity`
   margin: 16px 0;
@@ -10,24 +11,39 @@ export const SlipContainer = styled.TouchableOpacity`
 
 export const SlipInfo = styled.View``;
 
-export const SlipName = styled.Text`
+interface SlipNameProps {
+  slip?: Slip;
+}
+
+export const SlipName = styled.Text<SlipNameProps>`
   font-family: "Lexend-SemiBold";
   font-size: 17px;
   line-height: 21px;
-  color: #585666;
+  color: ${(props) =>
+    props?.slip?.paid ? "rgba(88, 86, 102, 0.2)" : "#585666"};
 `;
 
-export const SlipDuoDate = styled.Text`
+export const SlipDuoDate = styled.Text<SlipNameProps>`
   margin-top: 6px;
   font-family: "Lexend-Regular";
   font-size: 13px;
   line-height: 16px;
-  color: #706e7a;
+  color: ${(props) =>
+    props?.slip?.paid ? "rgba(88, 86, 102, 0.2)" : "#706e7a"};
 `;
 
-export const SlipValue = styled.Text`
+export const EveryMonth = styled.Text<SlipNameProps>`
+  font-family: "Lexend-Regular";
+  font-size: 13px;
+  line-height: 16px;
+  color: ${(props) =>
+    props?.slip?.paid ? "rgba(255, 148, 26, 0.2)" : "#FF941A"};
+`;
+
+export const SlipValue = styled.Text<SlipNameProps>`
   font-family: "Lexend-SemiBold";
   font-size: 16px;
   line-height: 19px;
-  color: #585666;
+  color: ${(props) =>
+    props?.slip?.paid ? "rgba(88, 86, 102, 0.2)" : "#585666"};
 `;

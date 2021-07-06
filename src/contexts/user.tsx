@@ -6,7 +6,6 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import auth from "@react-native-firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WEBCLIENTID } from "@env";
-import { saveUserData } from "../services/database";
 import { useEffect } from "react";
 import { getSlips, login } from "../services/FirestoreDatabase";
 export interface User {
@@ -30,6 +29,7 @@ export interface Slip {
 interface UserContextData {
   user: User;
   handleSigInWithGoogle(): Promise<User | undefined>;
+  handleLogoff(): void;
   slips: Slip[];
   loadSlips(): Promise<void>;
 }
@@ -54,6 +54,13 @@ export const UserProvider = ({
   // };
   // clearLocalStorage();
 
+  const handleLogoff = async () => {
+    GoogleSignin.signOut();
+    setUser({} as User);
+    setSlips([]);
+    await AsyncStorage.clear();
+  };
+
   const loadSlips = async () => {
     const slipsdb = await getSlips(user);
 
@@ -73,41 +80,45 @@ export const UserProvider = ({
   };
 
   const handleSigInWithGoogle = async () => {
-    GoogleSignin.configure({
-      webClientId: WEBCLIENTID,
-    });
+    try {
+      GoogleSignin.configure({
+        webClientId: WEBCLIENTID,
+      });
 
-    const { idToken } = await GoogleSignin.signIn();
+      const { idToken } = await GoogleSignin.signIn();
 
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-    const response = await auth().signInWithCredential(googleCredential);
+      const response = await auth().signInWithCredential(googleCredential);
 
-    if (
-      response?.user?.displayName &&
-      response?.additionalUserInfo?.profile?.picture
-    ) {
-      const userData = {
-        id: response?.user.uid,
-        name: response?.user?.displayName,
-        avatar_url: response?.additionalUserInfo?.profile?.picture,
-        loginDate: new Date(),
-      };
+      if (
+        response?.user?.displayName &&
+        response?.additionalUserInfo?.profile?.picture
+      ) {
+        const userData = {
+          id: response?.user.uid,
+          name: response?.user?.displayName,
+          avatar_url: response?.additionalUserInfo?.profile?.picture,
+          loginDate: new Date(),
+        };
 
-      const userLogin = await login(userData);
+        const userLogin = await login(userData);
 
-      if (userLogin) {
-        setUser(userLogin);
-        saveInLocalStorage("user", userLogin);
-        // loadSlips();
-        return userData;
+        if (userLogin) {
+          setUser(userLogin);
+          saveInLocalStorage("user", userLogin);
+          // loadSlips();
+          return userData;
+        }
       }
+    } catch (error) {
+      return;
     }
   };
 
   return (
     <UserContext.Provider
-      value={{ user, handleSigInWithGoogle, slips, loadSlips }}
+      value={{ user, handleSigInWithGoogle, slips, loadSlips, handleLogoff }}
     >
       {children}
     </UserContext.Provider>

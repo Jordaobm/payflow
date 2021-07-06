@@ -1,33 +1,24 @@
-import React, { useState } from "react";
-import { View, Text, StatusBar, ScrollView } from "react-native";
+import React from "react";
+import { StatusBar, ScrollView } from "react-native";
 import { useUser } from "../../contexts/user";
 import {
-  BolderText,
   Container,
   ContentMySlips,
   ContentPaymentSlipCard,
   ContentSlips,
-  ContentText,
   EmptyView,
   FillSeparatorMySlips,
   MySplips,
-  ProfileData,
-  ProfileImage,
   TotalSplips,
-  Welcome,
-  WelcomeText,
 } from "./styles";
 import RadialGradient from "react-native-radial-gradient";
 import { PaymentSlipCard } from "../../components/PaymentSlipCard";
 import { CardSlip } from "../../components/CardSlip";
 import { Navigation } from "../../components/Navigation";
-import { SigInWithGoogle } from "../../components/SigInWithGoogle";
+import { Profile } from "../../components/Profile";
 
 const Home: React.FC = () => {
-  const { user, slips } = useUser();
-
-  const [loading, setLoading] = useState(true);
-
+  const { slips } = useUser();
   return (
     <Container>
       <StatusBar barStyle="light-content" backgroundColor="#FF941A" />
@@ -37,15 +28,7 @@ const Home: React.FC = () => {
         center={[200, 150]}
         radius={150}
       >
-        <ProfileData>
-          <Welcome>
-            <WelcomeText>
-              Olá, <BolderText>{user?.name?.split(" ")[0]}</BolderText>
-            </WelcomeText>
-            <ContentText>Mantenha suas contas em dia</ContentText>
-          </Welcome>
-          <ProfileImage source={{ uri: user.avatar_url }} />
-        </ProfileData>
+        <Profile />
       </RadialGradient>
 
       <ContentPaymentSlipCard>
@@ -62,7 +45,7 @@ const Home: React.FC = () => {
       <ScrollView>
         <ContentSlips>
           {slips
-            .filter((slip) => slip.paid === false)
+            .filter((slip) => slip.paid === false || slip.everyMonth)
             .map((slip, index) => (
               <CardSlip edit slip={slip} key={index} />
             ))}
