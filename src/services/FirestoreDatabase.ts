@@ -111,14 +111,14 @@ export async function getSlips(user: User) {
   }
 }
 
-export async function updateSlip(slip: Slip) {
-  const update = firestore()
-    .collection("slips")
-    .doc(slip.databaseId)
-    .update({
-      paid: true,
-    })
-    .then(() => {});
+export async function updateSlip(slip: Slip, updatedFields: Slip) {
+  if (slip && updatedFields) {
+    const update = firestore()
+      .collection("slips")
+      .doc(slip.databaseId)
+      .update({ ...updatedFields })
+      .then(() => {});
+  }
 }
 
 export async function deleteSlip(slip: Slip) {

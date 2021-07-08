@@ -71,7 +71,12 @@ export const Modal = ({
               </CancelButton>
               <ConfirmButton
                 onPress={() => {
-                  updateSlip(slip);
+                  updateSlip(slip, {
+                    ...slip,
+                    paid: true,
+                    code: slip?.code ?? "",
+                    databaseId: slip?.databaseId ?? "",
+                  });
                   loadSlips();
                   closeModal(false);
                 }}

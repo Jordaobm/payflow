@@ -40,7 +40,11 @@ export const NewSlip = () => {
 
   const handleSaveSlip = async () => {
     if (slip.name && slip.value) {
-      await saveSlip(user, { ...slip, paid: false });
+      await saveSlip(user, {
+        ...slip,
+        paid: false,
+        everyMonth: slip.everyMonth ?? false,
+      });
       await loadSlips();
       navigation.navigate("Home");
     }

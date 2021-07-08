@@ -16,6 +16,7 @@ interface SlipNameProps {
 }
 
 export const SlipName = styled.Text<SlipNameProps>`
+  max-width: 99%;
   font-family: "Lexend-SemiBold";
   font-size: 17px;
   line-height: 21px;

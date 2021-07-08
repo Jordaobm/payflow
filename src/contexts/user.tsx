@@ -7,7 +7,8 @@ import auth from "@react-native-firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WEBCLIENTID } from "@env";
 import { useEffect } from "react";
-import { getSlips, login } from "../services/FirestoreDatabase";
+import { getSlips, login, updateSlip } from "../services/FirestoreDatabase";
+import { format } from "date-fns";
 export interface User {
   databaseId?: string;
   id: string;
@@ -31,7 +32,7 @@ interface UserContextData {
   handleSigInWithGoogle(): Promise<User | undefined>;
   handleLogoff(): void;
   slips: Slip[];
-  loadSlips(): Promise<void>;
+  loadSlips(): Promise<Slip[] | undefined>;
 }
 
 const UserContext = createContext({} as UserContextData);
@@ -65,14 +66,85 @@ export const UserProvider = ({
     const slipsdb = await getSlips(user);
 
     if (slipsdb) {
-      setSlips(slipsdb);
+      const organizeArray = slipsdb
+        .sort((a, b) => {
+          if (a.everyMonth > b.everyMonth) {
+            return -1;
+          } else {
+            return 0;
+          }
+        })
+        .sort((a, b) => {
+          if (a.paid > b.paid) {
+            return -1;
+          } else {
+            return 0;
+          }
+        });
+
+      setSlips(organizeArray);
+      return organizeArray;
+    }
+  };
+
+  const updateSlipsRecurrent = (data: Slip[]) => {
+    const recurringAndAlreadyPaid = data.filter((slip) => {
+      if (slip.everyMonth && slip.paid) {
+        return slip;
+      }
+    });
+
+    const currentMonth = format(new Date(), "MM");
+
+    const updateSlips = recurringAndAlreadyPaid.filter((slip) => {
+      const monthDueDate = slip.dueDate.split("/")[1];
+
+      if (Number(currentMonth) > Number(monthDueDate)) {
+        return slip;
+      }
+    });
+
+    if (updateSlips.length > 0) {
+      const updateDataSlips = updateSlips.map((slip) => {
+        const day = slip.dueDate.split("/")[0];
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth();
+        const newDate = new Date(currentYear, currentMonth, Number(day));
+
+        const parsedDate = format(newDate, "dd/MM/yyyy");
+
+        return {
+          ...slip,
+          dueDate: parsedDate,
+          paid: false,
+        };
+      });
+
+      if (updateDataSlips) {
+        updateDataSlips.forEach(async (slip) => {
+          if (slip) {
+            await updateSlip(slip, {
+              ...slip,
+              code: slip?.code ?? "",
+              databaseId: slip?.databaseId ?? "",
+            });
+          }
+        });
+      }
     }
   };
 
   useEffect(() => {
     if (user.id) {
-      loadSlips();
+      const slipsDB = loadSlips().then((data) => {
+        if (data) {
+          updateSlipsRecurrent(data);
+
+          loadSlips();
+        }
+      });
     }
+    return;
   }, [user]);
 
   const saveInLocalStorage = async (key: string, data: any) => {

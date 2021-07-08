@@ -45,10 +45,17 @@ const Home: React.FC = () => {
       <ScrollView>
         <ContentSlips>
           {slips
-            .filter((slip) => slip.paid === false || slip.everyMonth)
-            .map((slip, index) => (
-              <CardSlip edit slip={slip} key={index} />
-            ))}
+            .filter((slip) => {
+              if (slip.paid === false) {
+                return slip;
+              }
+              if (slip.paid && slip.everyMonth) {
+                return slip;
+              }
+            })
+            .map((slip, index) => {
+              return <CardSlip edit slip={slip} key={index} />;
+            })}
         </ContentSlips>
 
         <EmptyView />
