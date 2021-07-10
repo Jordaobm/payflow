@@ -9,19 +9,26 @@ export const SlipContainer = styled.TouchableOpacity`
   align-items: baseline;
 `;
 
-export const SlipInfo = styled.View``;
+export const SlipInfo = styled.View`
+  max-width: 70%;
+`;
 
 interface SlipNameProps {
   slip?: Slip;
+  isExpiredAndNotBeenPaid?: boolean;
 }
 
 export const SlipName = styled.Text<SlipNameProps>`
-  max-width: 99%;
   font-family: "Lexend-SemiBold";
   font-size: 17px;
   line-height: 21px;
+
   color: ${(props) =>
-    props?.slip?.paid ? "rgba(88, 86, 102, 0.2)" : "#585666"};
+    props?.isExpiredAndNotBeenPaid
+      ? "#F56565"
+      : props?.slip?.paid
+      ? "rgba(88, 86, 102, 0.2)"
+      : "#585666"};
 `;
 
 export const SlipDuoDate = styled.Text<SlipNameProps>`
@@ -29,8 +36,14 @@ export const SlipDuoDate = styled.Text<SlipNameProps>`
   font-family: "Lexend-Regular";
   font-size: 13px;
   line-height: 16px;
+  /* color: ${(props) =>
+    props?.slip?.paid ? "rgba(88, 86, 102, 0.2)" : "#706e7a"}; */
   color: ${(props) =>
-    props?.slip?.paid ? "rgba(88, 86, 102, 0.2)" : "#706e7a"};
+    props?.isExpiredAndNotBeenPaid
+      ? "#F56565"
+      : props?.slip?.paid
+      ? "rgba(88, 86, 102, 0.2)"
+      : "#585666"};
 `;
 
 export const EveryMonth = styled.Text<SlipNameProps>`
@@ -46,5 +59,9 @@ export const SlipValue = styled.Text<SlipNameProps>`
   font-size: 16px;
   line-height: 19px;
   color: ${(props) =>
-    props?.slip?.paid ? "rgba(88, 86, 102, 0.2)" : "#585666"};
+    props?.isExpiredAndNotBeenPaid
+      ? "#F56565"
+      : props?.slip?.paid
+      ? "rgba(88, 86, 102, 0.2)"
+      : "#585666"};
 `;

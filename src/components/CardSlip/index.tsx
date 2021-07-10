@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, isAfter } from "date-fns";
 import React from "react";
 import { useState } from "react";
 import { Slip } from "../../contexts/user";
@@ -28,6 +28,8 @@ export const CardSlip = ({
 }: CardSlipProps) => {
   const [showModal, setShowModal] = useState(false);
 
+  const isExpiredAndNotBeenPaid =
+    isAfter(new Date(), StringToDate(slip.dueDate)) && !slip.paid;
   return (
     <>
       {showModal && (
@@ -40,10 +42,16 @@ export const CardSlip = ({
       )}
       <SlipContainer onPress={() => edit && setShowModal(true)}>
         <SlipInfo>
-          <SlipName slip={type === "EXTRACT" ? ({} as Slip) : slip}>
+          <SlipName
+            slip={type === "EXTRACT" ? ({} as Slip) : slip}
+            isExpiredAndNotBeenPaid={isExpiredAndNotBeenPaid}
+          >
             {slip.name}
           </SlipName>
-          <SlipDuoDate slip={type === "EXTRACT" ? ({} as Slip) : slip}>
+          <SlipDuoDate
+            slip={type === "EXTRACT" ? ({} as Slip) : slip}
+            isExpiredAndNotBeenPaid={isExpiredAndNotBeenPaid}
+          >
             Vence em {format(StringToDate(slip.dueDate), "dd'/'MM'/'yyyy")} {""}
             {slip.everyMonth && (
               <EveryMonth slip={type === "EXTRACT" ? ({} as Slip) : slip}>
@@ -52,7 +60,10 @@ export const CardSlip = ({
             )}
           </SlipDuoDate>
         </SlipInfo>
-        <SlipValue slip={type === "EXTRACT" ? ({} as Slip) : slip}>
+        <SlipValue
+          slip={type === "EXTRACT" ? ({} as Slip) : slip}
+          isExpiredAndNotBeenPaid={isExpiredAndNotBeenPaid}
+        >
           {formatCurrency(Number(slip.value))}
         </SlipValue>
       </SlipContainer>

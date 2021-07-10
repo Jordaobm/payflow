@@ -9,6 +9,7 @@ import { WEBCLIENTID } from "@env";
 import { useEffect } from "react";
 import { getSlips, login, updateSlip } from "../services/FirestoreDatabase";
 import { format } from "date-fns";
+import { useCallback } from "react";
 export interface User {
   databaseId?: string;
   id: string;
@@ -33,6 +34,7 @@ interface UserContextData {
   handleLogoff(): void;
   slips: Slip[];
   loadSlips(): Promise<Slip[] | undefined>;
+  updateSlipsRecurrent(data: Slip[]): void;
 }
 
 const UserContext = createContext({} as UserContextData);
@@ -120,18 +122,10 @@ export const UserProvider = ({
         };
       });
 
-      if (updateDataSlips) {
-        updateDataSlips.forEach(async (slip) => {
-          if (slip) {
-            await updateSlip(slip, {
-              ...slip,
-              code: slip?.code ?? "",
-              databaseId: slip?.databaseId ?? "",
-            });
-          }
-        });
-      }
+      return updateDataSlips;
     }
+
+    return [];
   };
 
   const saveInLocalStorage = async (key: string, data: any) => {
@@ -175,22 +169,49 @@ export const UserProvider = ({
     }
   };
 
+  const findSlipsRecurrentExpiredAlreadyPaid = updateSlipsRecurrent(slips);
+
   useEffect(() => {
+    console.log("caiu no useEffect");
+
     if (user.id) {
       const slipsDB = loadSlips().then((data) => {
         if (data) {
-          updateSlipsRecurrent(data);
+          if (findSlipsRecurrentExpiredAlreadyPaid.length > 0) {
+            console.log("vai atualizar os boletos");
+
+            const slipsUpdate = updateSlipsRecurrent(data);
+
+            if (slipsUpdate) {
+              slipsUpdate.forEach(async (slip) => {
+                if (slip) {
+                  await updateSlip(slip, {
+                    ...slip,
+                    code: slip?.code ?? "",
+                    databaseId: slip?.databaseId ?? "",
+                  });
+                }
+              });
+            }
+          }
 
           loadSlips();
         }
       });
     }
     return;
-  }, [user]);
+  }, [user, findSlipsRecurrentExpiredAlreadyPaid.length]);
 
   return (
     <UserContext.Provider
-      value={{ user, handleSigInWithGoogle, slips, loadSlips, handleLogoff }}
+      value={{
+        user,
+        handleSigInWithGoogle,
+        slips,
+        loadSlips,
+        handleLogoff,
+        updateSlipsRecurrent,
+      }}
     >
       {children}
     </UserContext.Provider>
