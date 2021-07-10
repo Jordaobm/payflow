@@ -134,19 +134,6 @@ export const UserProvider = ({
     }
   };
 
-  useEffect(() => {
-    if (user.id) {
-      const slipsDB = loadSlips().then((data) => {
-        if (data) {
-          updateSlipsRecurrent(data);
-
-          loadSlips();
-        }
-      });
-    }
-    return;
-  }, [user]);
-
   const saveInLocalStorage = async (key: string, data: any) => {
     await AsyncStorage.setItem(`@PayFlow-${key}`, JSON.stringify(data));
   };
@@ -187,6 +174,19 @@ export const UserProvider = ({
       return;
     }
   };
+
+  useEffect(() => {
+    if (user.id) {
+      const slipsDB = loadSlips().then((data) => {
+        if (data) {
+          updateSlipsRecurrent(data);
+
+          loadSlips();
+        }
+      });
+    }
+    return;
+  }, [user]);
 
   return (
     <UserContext.Provider

@@ -33,6 +33,7 @@
     "react-native-screens": "^3.4.0",
     "react-native-splash-screen": "^3.2.0",
     "react-native-text-input-mask": "^3.1.4",
+    "react-native-toast-message": "^1.4.9",
     "styled-components": "^5.3.0"
   },
   "devDependencies": {

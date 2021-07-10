@@ -154,6 +154,10 @@ android {
     }
     signingConfigs {
         release {
+            storeFile file('D:\\jordao\\Documentos\\payFlow2\\android\\app\\payflow.keystore')
+            storePassword 'payflow'
+            keyAlias 'payflow'
+            keyPassword 'payflow'
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
                 storeFile file(MYAPP_UPLOAD_STORE_FILE)
                 storePassword MYAPP_UPLOAD_STORE_PASSWORD
@@ -162,10 +166,10 @@ android {
             }
         }
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
         }
     }
     buildTypes {
@@ -199,6 +203,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation project(':react-native-linear-gradient')
     implementation 'com.firebaseui:firebase-ui-auth:6.4.0'

@@ -1,7 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { KeyboardAvoidingView, ScrollView, StatusBar } from "react-native";
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StatusBar,
+  ToastAndroid,
+} from "react-native";
+import Toast from "react-native-toast-message";
 import { Input } from "../../components/Input";
 import { Slip, useUser } from "../../contexts/user";
 import {
@@ -34,12 +40,14 @@ import {
 export const NewSlip = () => {
   const [slip, setSlip] = useState<Slip>({} as Slip);
 
+  const [error, setError] = useState(false);
+
   const { user, loadSlips } = useUser();
 
   const navigation = useNavigation();
 
   const handleSaveSlip = async () => {
-    if (slip.name && slip.value) {
+    if (slip.name && slip.dueDate && slip.value) {
       await saveSlip(user, {
         ...slip,
         paid: false,
@@ -47,8 +55,24 @@ export const NewSlip = () => {
       });
       await loadSlips();
       navigation.navigate("Home");
+    } else {
+      setError(true);
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      Toast.show({
+        type: "error",
+        text1: "Ocorreu um erro",
+        text2: "Preencha ao menos um nome, data de vencimento e valor",
+        autoHide: true,
+        onHide: () => {
+          setError(false);
+        },
+      });
+    }
+  }, [error]);
 
   return (
     <Container>
