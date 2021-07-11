@@ -137,7 +137,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.payflow2"
+        applicationId "com.jbmassariolpayflow"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

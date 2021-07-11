@@ -1,4 +1,4 @@
-package com.payflow2;
+package com.jbmassariolpayflow;
 
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen; // Adicione esse import

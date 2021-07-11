@@ -1,4 +1,4 @@
-package com.payflow2;
+package com.jbmassariolpayflow;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,18 +1,27 @@
 {
   "project_info": {
     "project_number": "345514263010",
+    "firebase_url": "https://payflow-ec48b-default-rtdb.firebaseio.com",
     "project_id": "payflow-ec48b",
     "storage_bucket": "payflow-ec48b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:345514263010:android:9ead0ed650b31ea9b7b9bb",
+        "mobilesdk_app_id": "1:345514263010:android:efd25d105d3c06acb7b9bb",
         "android_client_info": {
-          "package_name": "com.payflow2"
+          "package_name": "com.jbmassariolpayflow"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "345514263010-m60boo005l23gof9bgsm41r89rpbdga4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jbmassariolpayflow",
+            "certificate_hash": "dd550de034e4ad02c20f534f028eb649abccba29"
+          }
+        },
         {
           "client_id": "345514263010-d2hjs99l7vhh9bjd1ok6eh3mdlfh5ia0.apps.googleusercontent.com",
           "client_type": 3
@@ -27,7 +36,44 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "345514263010-d2hjs99l7vhh9bjd1ok6eh3mdlfh5ia0.apps.googleusercontent.com",
+              "client_id": "345514263010-9i2ilvtlka015npterbs8b6ijunf3u2h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345514263010:android:9ead0ed650b31ea9b7b9bb",
+        "android_client_info": {
+          "package_name": "com.payflow2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "345514263010-djfdaeu169lde8sgbjoj1h7rkr4jn923.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.payflow2",
+            "certificate_hash": "dd550de034e4ad02c20f534f028eb649abccba29"
+          }
+        },
+        {
+          "client_id": "345514263010-d2hjs99l7vhh9bjd1ok6eh3mdlfh5ia0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYgYHlNzK1s7Mh0AuL5d6PrrUct5UxKMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "345514263010-9i2ilvtlka015npterbs8b6ijunf3u2h.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
