@@ -9,10 +9,10 @@
 <h1 align="center">
    <img alt="react" title="react" src="https://github.com/Jordaobm/payflow/blob/master/doc/react.svg" width="70px" />
    
-  <a href="https://github.com/Jordaobm/notes-React-Native/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/Jordaobm/notes-React-Native?style=plastic"></a>
-  <a href="https://github.com/Jordaobm/notes-React-Native/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/Jordaobm/notes-React-Native"></a>
-  <a href="https://github.com/Jordaobm/notes-React-Native/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Jordaobm/notes-React-Native"></a>
-  <a href="https://github.com/Jordaobm/notes-React-Native"><img alt="GitHub license" src="https://img.shields.io/github/license/Jordaobm/notes-React-Native"></a>
+  <a href="https://github.com/Jordaobm/payflow/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/Jordaobm/payflow"></a>
+  <a href="https://github.com/Jordaobm/payflow/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/Jordaobm/payflow"></a>
+  <a href="https://github.com/Jordaobm/payflow/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Jordaobm/payflow"></a>
+  <a href="https://github.com/Jordaobm/payflow"><img alt="GitHub license" src="https://img.shields.io/github/license/Jordaobm/payflow"></a>
   <a href="https://twitter.com/JordoMass"><img alt="Twitter" src="https://img.shields.io/twitter/url?style=social"></a>
 </h1>
 
