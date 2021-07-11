@@ -42,7 +42,7 @@ export const Icon = styled.Image`
   width: 22px;
   height: 22px;
 `;
-export const ButtonAddSlip = styled.TouchableOpacity`
+export const ButtonAddSlip = styled.View`
   position: relative;
   top: -44%;
   left: -21%;
@@ -54,7 +54,7 @@ export const ButtonAddSlip = styled.TouchableOpacity`
   border-radius: 5px;
 `;
 
-export const ButtonExtract = styled.TouchableOpacity`
+export const ButtonExtract = styled.View`
   position: relative;
   top: -98%;
   left: 24%;

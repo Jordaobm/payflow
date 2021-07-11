@@ -41,8 +41,7 @@ export const FillSeparatorMySlips = styled.View`
 
 export const ContentSlips = styled.View`
   width: 100%;
-  padding: 0 24px;
-  padding-bottom: 24px;
+  padding: 0 24px 55px 24px;
 `;
 
 export const EmptyView = styled.View`

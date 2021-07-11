@@ -31,12 +31,12 @@ export const TotalSplips = styled.Text`
 export const FillSeparatorMySlips = styled.View`
   height: 1px;
   background-color: #e3e3e6;
-  margin: 24px;
+  margin: 24px 24px 16px 24px;
 `;
 
 export const ContentSlips = styled.View`
   width: 100%;
-  padding: 0 24px;
+  padding: 0 24px 55px 24px;
 `;
 
 export const EmptyView = styled.View`
