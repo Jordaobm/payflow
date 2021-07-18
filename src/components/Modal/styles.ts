@@ -29,6 +29,7 @@ export const SlipInfo = styled.Text`
 `;
 
 export const Warning = styled.Text`
+  padding: 0 20px;
   width: 100%;
   text-align: center;
   font-family: "Lexend-Regular";
