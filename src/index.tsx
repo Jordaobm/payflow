@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { NotificationProvider } from "./contexts/notifications";
 import { User, UserProvider } from "./contexts/user";
 import { Routes } from "./routes";
 
@@ -30,7 +31,9 @@ export function App() {
   if (initialDataUser) {
     return (
       <UserProvider initialDataUser={initialDataUser}>
-        <Routes />
+        <NotificationProvider>
+          <Routes />
+        </NotificationProvider>
       </UserProvider>
     );
   }

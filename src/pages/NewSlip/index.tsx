@@ -1,12 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import {
-  KeyboardAvoidingView,
-  ScrollView,
-  StatusBar,
-  ToastAndroid,
-} from "react-native";
+import { KeyboardAvoidingView, ScrollView, StatusBar } from "react-native";
 import Toast from "react-native-toast-message";
 import { Input } from "../../components/Input";
 import { Slip, useUser } from "../../contexts/user";
@@ -67,6 +62,8 @@ export const NewSlip = () => {
         text1: "Ocorreu um erro",
         text2: "Preencha ao menos um nome, data de vencimento e valor",
         autoHide: true,
+        visibilityTime: 2000,
+
         onHide: () => {
           setError(false);
         },

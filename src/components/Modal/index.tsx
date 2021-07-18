@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "react-native";
 import { Text, View } from "react-native-animatable";
 import ReactModal from "react-native-modal";
+import { useNotification } from "../../contexts/notifications";
 import { Slip, useUser } from "../../contexts/user";
 import { trash } from "../../icons";
 import { deleteSlip, updateSlip } from "../../services/FirestoreDatabase";
@@ -37,6 +38,8 @@ export const Modal = ({
   type = "HOME",
 }: ModalProps) => {
   const { loadSlips } = useUser();
+
+  const { cancelNotifications } = useNotification();
 
   return (
     <View>
@@ -77,6 +80,7 @@ export const Modal = ({
                     code: slip?.code ?? "",
                     databaseId: slip?.databaseId ?? "",
                   });
+                  cancelNotifications(slip);
                   loadSlips();
                   closeModal(false);
                 }}
@@ -91,6 +95,7 @@ export const Modal = ({
             <DeleteButton
               onPress={() => {
                 deleteSlip(slip);
+                cancelNotifications(slip);
                 loadSlips();
                 closeModal(false);
               }}

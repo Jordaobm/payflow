@@ -140,8 +140,8 @@ android {
         applicationId "com.jbmassariolpayflow"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.1.0"
         multiDexEnabled true
     }
     splits {
@@ -203,6 +203,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-push-notification')
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation project(':react-native-linear-gradient')

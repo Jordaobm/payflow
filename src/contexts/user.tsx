@@ -9,7 +9,7 @@ import { WEBCLIENTID } from "@env";
 import { useEffect } from "react";
 import { getSlips, login, updateSlip } from "../services/FirestoreDatabase";
 import { format } from "date-fns";
-import { useCallback } from "react";
+
 export interface User {
   databaseId?: string;
   id: string;
@@ -172,14 +172,10 @@ export const UserProvider = ({
   const findSlipsRecurrentExpiredAlreadyPaid = updateSlipsRecurrent(slips);
 
   useEffect(() => {
-    console.log("caiu no useEffect");
-
     if (user.id) {
       const slipsDB = loadSlips().then((data) => {
         if (data) {
           if (findSlipsRecurrentExpiredAlreadyPaid.length > 0) {
-            console.log("vai atualizar os boletos");
-
             const slipsUpdate = updateSlipsRecurrent(data);
 
             if (slipsUpdate) {

@@ -16,7 +16,10 @@ export const GoBack = styled.TouchableOpacity`
   justify-content: center;
 `;
 
-export const ArrowLeft = styled.Image``;
+export const ArrowLeft = styled.Image`
+  width: 24px;
+  height: 24px;
+`;
 
 export const Content = styled.View`
   margin-top: 24px;

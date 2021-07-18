@@ -13,6 +13,7 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage; // <--- Import Package
 
 public class MainApplication extends Application implements ReactApplication {
 
