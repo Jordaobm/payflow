@@ -1,11 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { isAfter } from "date-fns";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import { createContext, ReactNode } from "react";
 import NotifService from "../services/NotifService";
-import { formatDate } from "../utils/formatDate";
 import { StringToDate } from "../utils/StringToDate";
 import { transformStringInNumberId } from "../utils/transformStringInNumberId";
 import { Slip, useUser } from "./user";
@@ -60,8 +58,6 @@ export const NotificationProvider = ({
 
   useEffect(() => {
     saveLocalStorage();
-
-    // AsyncStorage.setItem("@Payflow-notifications", JSON.stringify([]));
   }, [notifications]);
 
   const createNotifications = () => {
@@ -78,9 +74,7 @@ export const NotificationProvider = ({
       });
 
       if (alreadyExistInNotification) {
-        console.log("ja existe em notificações");
       } else {
-        console.log("agendando notificação");
         const updateNotifications = notifications;
 
         if (updateNotifications) {
@@ -118,12 +112,6 @@ export const NotificationProvider = ({
       }
     }
   }, [slips]);
-
-  console.log("MEU CONTROLE DE NOTIFICAÇÕES", notifications);
-
-  notifService.getScheduledLocalNotifications((callback) =>
-    console.log("NOTIFICAÇÕES AGENDADAS =>", callback)
-  );
   return (
     <NotificationContext.Provider value={{ cancelNotifications }}>
       {children}

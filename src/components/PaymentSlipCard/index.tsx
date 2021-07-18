@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  BarCodeContent,
   BarCodeImage,
   BolderText,
   Container,
@@ -10,18 +9,19 @@ import {
 import barCodeWhite from "../../../assets/images/barCodeWhite.png";
 import { useUser } from "../../contexts/user";
 
-export const PaymentSlipCard = () => {
-  const { slips } = useUser();
+interface PaymentSlipCardProps {
+  totalSlipsNotPaid: number;
+}
 
+export const PaymentSlipCard = ({
+  totalSlipsNotPaid,
+}: PaymentSlipCardProps) => {
   return (
     <Container>
       <BarCodeImage source={barCodeWhite} />
       <Fill />
       <Information>
-        Você tem{" "}
-        <BolderText>
-          {slips.filter((slip) => slip.paid === false).length} boletos
-        </BolderText>{" "}
+        Você tem <BolderText>{totalSlipsNotPaid} boletos</BolderText>{" "}
         cadastrados para pagar
       </Information>
     </Container>

@@ -16,9 +16,26 @@ import { PaymentSlipCard } from "../../components/PaymentSlipCard";
 import { CardSlip } from "../../components/CardSlip";
 import { Navigation } from "../../components/Navigation";
 import { Profile } from "../../components/Profile";
+import { StringToDate } from "../../utils/StringToDate";
+import { isBefore } from "date-fns";
 
 const Home: React.FC = () => {
   const { slips } = useUser();
+
+  const totalSlipsNotPaid = slips.filter((slip) => {
+    const firstDayMonth = new Date(
+      new Date().getFullYear(),
+      StringToDate(slip.dueDate).getMonth(),
+      1
+    );
+    const isRecurringAndExpirationMonthIsGreaterCurrentMonth =
+      slip.everyMonth && isBefore(new Date(), firstDayMonth);
+
+    if (!isRecurringAndExpirationMonthIsGreaterCurrentMonth) {
+      return slip;
+    }
+  });
+
   return (
     <Container>
       <StatusBar barStyle="light-content" backgroundColor="#FF941A" />
@@ -32,13 +49,18 @@ const Home: React.FC = () => {
       </RadialGradient>
 
       <ContentPaymentSlipCard>
-        <PaymentSlipCard />
+        <PaymentSlipCard
+          totalSlipsNotPaid={
+            totalSlipsNotPaid.filter((slip) => slip.paid === false).length
+          }
+        />
       </ContentPaymentSlipCard>
 
       <ContentMySlips>
         <MySplips>Meus boletos</MySplips>
         <TotalSplips>
-          {slips.filter((slip) => slip.paid === false).length} ao total
+          {totalSlipsNotPaid.filter((slip) => slip.paid === false).length} ao
+          total
         </TotalSplips>
       </ContentMySlips>
       <FillSeparatorMySlips />

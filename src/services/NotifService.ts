@@ -1,6 +1,4 @@
 import PushNotification from "react-native-push-notification";
-import { formatDateForNotifications } from "../utils/formatDate";
-import NotificationHandler from "./NotificationHandler";
 
 export default class NotifService {
   lastId: number;
@@ -8,13 +6,7 @@ export default class NotifService {
   constructor() {
     this.lastId = 0;
     this.lastChannelCounter = 0;
-
     this.createDefaultChannels();
-
-    // NotificationHandler.attachRegister(onRegister);
-    // NotificationHandler.attachNotification(onNotification);
-
-    // Clear badge number at start
     PushNotification.getApplicationIconBadgeNumber(function (number) {
       if (number > 0) {
         PushNotification.setApplicationIconBadgeNumber(0);
@@ -30,11 +22,11 @@ export default class NotifService {
         channelId: "default-channel-id", // (required)
         channelName: "Default channel", // (required)
         channelDescription: "A default channel", // (optional) default: undefined.
-        soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+        soundName: "my_sound.mp3", // (optional) See `soundName` parameter of `localNotification` function
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      (created) => console.log() // (optional) callback returns whether the channel was created, false means it already existed.
+      (created) => {} // (optional) callback returns whether the channel was created, false means it already existed.
     );
     PushNotification.createChannel(
       {
@@ -45,7 +37,7 @@ export default class NotifService {
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      (created) => console.log() // (optional) callback returns whether the channel was created, false means it already existed.
+      (created) => {} // (optional) callback returns whether the channel was created, false means it already existed.
     );
   }
 
@@ -56,16 +48,16 @@ export default class NotifService {
         channelId: "custom-channel-id", // (required)
         channelName: `Custom channel - Counter: ${this.lastChannelCounter}`, // (required)
         channelDescription: `A custom channel to categorise your custom notifications. Updated at: ${Date.now()}`, // (optional) default: undefined.
-        soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
+        soundName: "my_sound.mp3", // (optional) See `soundName` parameter of `localNotification` function
         importance: 4, // (optional) default: 4. Int value of the Android notification importance
         vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
       },
-      (created) => console.log() // (optional) callback returns whether the channel was created, false means it already existed.
+      (created) => {} // (optional) callback returns whether the channel was created, false means it already existed.
     );
   }
 
   popInitialNotification() {
-    PushNotification.popInitialNotification((notification) => console.log());
+    PushNotification.popInitialNotification((notification) => {});
   }
 
   localNotif() {
@@ -102,7 +94,7 @@ export default class NotifService {
       message: "My Notification Message", // (required)
       userInfo: { screen: "home" }, // (optional) default: {} (using null throws a JSON value '<null>' error)
       // playSound: !!soundName, // (optional) default: true
-      soundName: "default", // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+      soundName: "my_sound.mp3", // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
       number: 10, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
     });
   }
@@ -142,7 +134,7 @@ export default class NotifService {
       message: "payflow", // (required)
       userInfo: { sceen: "home" }, // (optional) default: {} (using null throws a JSON value '<null>' error)
       // playSound: !!soundName, // (optional) default: true
-      soundName: "default", // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
+      soundName: "my_sound.mp3", // (optional) Sound to play when the notification is shown. Value of 'default' plays the default sound. It can be set to a custom sound such as 'android.resource://com.xyz/raw/my_sound'. It will look for the 'my_sound' audio file in 'res/raw' directory and play it. default: 'default' (default sound is played)
       // number: 10, // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
     });
   }

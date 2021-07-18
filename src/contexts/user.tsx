@@ -7,9 +7,7 @@ import auth from "@react-native-firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { WEBCLIENTID } from "@env";
 import { useEffect } from "react";
-import { getSlips, login, updateSlip } from "../services/FirestoreDatabase";
-import { format } from "date-fns";
-
+import { getSlips, login } from "../services/FirestoreDatabase";
 export interface User {
   databaseId?: string;
   id: string;
@@ -22,6 +20,7 @@ export interface Slip {
   databaseId?: string;
   name: string;
   dueDate: string;
+  firstDueDate?: string;
   value: string;
   everyMonth: boolean;
   paid: boolean;
@@ -34,7 +33,6 @@ interface UserContextData {
   handleLogoff(): void;
   slips: Slip[];
   loadSlips(): Promise<Slip[] | undefined>;
-  updateSlipsRecurrent(data: Slip[]): void;
 }
 
 const UserContext = createContext({} as UserContextData);
@@ -48,17 +46,12 @@ export const UserProvider = ({
   children,
   initialDataUser,
 }: UserProviderProps) => {
+  GoogleSignin.configure({});
   const [user, setUser] = useState<User>(initialDataUser ?? ({} as User));
   const [slips, setSlips] = useState<Slip[]>([]);
 
-  // const clearLocalStorage = async () => {
-  //   await AsyncStorage.clear();
-  //   console.log("limpou");
-  // };
-  // clearLocalStorage();
-
   const handleLogoff = async () => {
-    GoogleSignin.signOut();
+    await GoogleSignin.signOut();
     setUser({} as User);
     setSlips([]);
     await AsyncStorage.clear();
@@ -87,45 +80,6 @@ export const UserProvider = ({
       setSlips(organizeArray);
       return organizeArray;
     }
-  };
-
-  const updateSlipsRecurrent = (data: Slip[]) => {
-    const recurringAndAlreadyPaid = data.filter((slip) => {
-      if (slip.everyMonth && slip.paid) {
-        return slip;
-      }
-    });
-
-    const currentMonth = format(new Date(), "MM");
-
-    const updateSlips = recurringAndAlreadyPaid.filter((slip) => {
-      const monthDueDate = slip.dueDate.split("/")[1];
-
-      if (Number(currentMonth) > Number(monthDueDate)) {
-        return slip;
-      }
-    });
-
-    if (updateSlips.length > 0) {
-      const updateDataSlips = updateSlips.map((slip) => {
-        const day = slip.dueDate.split("/")[0];
-        const currentYear = new Date().getFullYear();
-        const currentMonth = new Date().getMonth();
-        const newDate = new Date(currentYear, currentMonth, Number(day));
-
-        const parsedDate = format(newDate, "dd/MM/yyyy");
-
-        return {
-          ...slip,
-          dueDate: parsedDate,
-          paid: false,
-        };
-      });
-
-      return updateDataSlips;
-    }
-
-    return [];
   };
 
   const saveInLocalStorage = async (key: string, data: any) => {
@@ -160,7 +114,6 @@ export const UserProvider = ({
         if (userLogin) {
           setUser(userLogin);
           saveInLocalStorage("user", userLogin);
-          // loadSlips();
           return userData;
         }
       }
@@ -169,34 +122,11 @@ export const UserProvider = ({
     }
   };
 
-  const findSlipsRecurrentExpiredAlreadyPaid = updateSlipsRecurrent(slips);
-
   useEffect(() => {
     if (user.id) {
-      const slipsDB = loadSlips().then((data) => {
-        if (data) {
-          if (findSlipsRecurrentExpiredAlreadyPaid.length > 0) {
-            const slipsUpdate = updateSlipsRecurrent(data);
-
-            if (slipsUpdate) {
-              slipsUpdate.forEach(async (slip) => {
-                if (slip) {
-                  await updateSlip(slip, {
-                    ...slip,
-                    code: slip?.code ?? "",
-                    databaseId: slip?.databaseId ?? "",
-                  });
-                }
-              });
-            }
-          }
-
-          loadSlips();
-        }
-      });
+      loadSlips();
     }
-    return;
-  }, [user, findSlipsRecurrentExpiredAlreadyPaid.length]);
+  }, [user]);
 
   return (
     <UserContext.Provider
@@ -206,7 +136,6 @@ export const UserProvider = ({
         slips,
         loadSlips,
         handleLogoff,
-        updateSlipsRecurrent,
       }}
     >
       {children}

@@ -28,6 +28,22 @@ export const SlipInfo = styled.Text`
   text-align: center;
 `;
 
+export const Warning = styled.Text`
+  width: 100%;
+  text-align: center;
+  font-family: "Lexend-Regular";
+  font-size: 14px;
+  line-height: 25px;
+  color: #585666;
+
+  text-align: center;
+  margin-top: 20px;
+`;
+
+export const WarningStrong = styled.Text`
+  color: #e83f5b;
+`;
+
 export const BolderText = styled.Text`
   font-family: "Lexend-Bold";
 `;

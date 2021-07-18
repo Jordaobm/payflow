@@ -1,14 +1,7 @@
 import firestore from "@react-native-firebase/firestore";
 import { Slip, User } from "../contexts/user";
 
-// databaseId?: string;
-//   id: string;
-//   name: string;
-//   avatar_url: string;
-//   loginDate: Date;
-
 export async function login(user: User) {
-  // buscando usuários na base
   const users = await firestore()
     .collection("users")
     .get()
@@ -29,29 +22,21 @@ export async function login(user: User) {
 
       return parsedUsers;
     });
-
-  // verificando se o usuário que logou já existe na base
   if (user) {
     const existUser = users.find((findUser) => findUser.id === user?.id);
 
     if (existUser) {
-      //retornando usuário que já existe
       return existUser;
     }
-
-    // adicionando usuário que não existe
     const addUser = await firestore()
       .collection("users")
       .add({
         ...user,
       })
       .then(() => {});
-
-    //buscando o usuário que acabou de ser adicionado
     if (user.id) {
       const findUser = await firestore()
         .collection("users")
-        // Filter results
         .where("id", "==", user?.id)
         .get()
         .then((querySnapshot) => {
@@ -78,6 +63,7 @@ export async function saveSlip(user: User, slip: Slip) {
     .add({
       ...slip,
       userId: user.id,
+      firstDueDate: slip.dueDate,
     });
 }
 
@@ -101,6 +87,7 @@ export async function getSlips(user: User) {
             everyMonth: data.everyMonth,
             paid: data.paid,
             code: data.code,
+            firstDueDate: data.firstDueDate,
           };
         });
 
@@ -113,6 +100,7 @@ export async function getSlips(user: User) {
 
 export async function updateSlip(slip: Slip, updatedFields: Slip) {
   if (slip && updatedFields) {
+    delete updatedFields.firstDueDate;
     const update = firestore()
       .collection("slips")
       .doc(slip.databaseId)
